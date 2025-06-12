@@ -14,6 +14,16 @@
       "mode": "view"
     }
   ],
+  "preferences": [
+    {
+      "required": true,
+      "name": "apiKey",
+      "type": "password",
+      "title": "Micro.blog API Key",
+      "description": "Enter your Micro.blog API token here",
+      "default": ""
+    }
+  ],
   "dependencies": {
     "@raycast/api": "^1.99.4",
     "@raycast/utils": "^1.17.0"

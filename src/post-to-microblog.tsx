@@ -1,21 +1,26 @@
-import { Form, ActionPanel, Action, showToast, Toast } from "@raycast/api";
+import { Form, ActionPanel, Action, showToast, Toast, getPreferenceValues, showHUD, PopToRootType } from "@raycast/api";
+
+type Preferences = {
+  apiKey: string;
+};
 
 type Values = {
   title: string;
   content: string;
-  token: string;
 };
 
 export default function Command() {
+  const preferences = getPreferenceValues<Preferences>();
+
   async function handlePost(values: Values) {
     if (!values.content || values.content.trim() === "") {
       await showToast({ title: "Error", message: "Content is required", style: Toast.Style.Failure });
       return;
     }
 
-    const token = values.token;
+    const token = preferences.apiKey;
     if (!token) {
-      await showToast({ title: "Error", message: "API token is required", style: Toast.Style.Failure });
+      await showToast({ title: "Error", message: "API token is required in preferences", style: Toast.Style.Failure });
       return;
     }
 
@@ -37,7 +42,7 @@ export default function Command() {
       });
 
       if (response.ok) {
-        await showToast({ title: "Success", message: "Post published to Micro.blog", style: Toast.Style.Success });
+        await showHUD("Post published to Micro.blog", { popToRootType: PopToRootType.Immediate });
       } else {
         const errorText = await response.text();
         await showToast({
@@ -63,7 +68,6 @@ export default function Command() {
       <Form.Description text="Post to Microblog" />
       <Form.TextField id="title" title="Title" placeholder="Optional" />
       <Form.TextArea id="content" title="Content" placeholder="Craft your post" autoFocus={true} />
-      <Form.TextField id="token" title="API Token" placeholder="Enter your Micro.blog API token" />
     </Form>
   );
 }
