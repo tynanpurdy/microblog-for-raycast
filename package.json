@@ -10,7 +10,7 @@
     {
       "name": "post-to-microblog",
       "title": "Post to Micro.blog",
-      "description": "Post to Micro.blog and your connected crossposting accounts.",
+      "description": "Post to Micro.blog and your connected crossposting accounts",
       "mode": "view"
     }
   ],
